@@ -35,38 +35,6 @@
 	}; 
 
 
-	/* FitVids
-	------------------------------------------------------ */ 
-	var ssFitVids = function() {
-		$(".fluid-video-wrapper").fitVids();
-	};  		
-
-   
-	/*	Masonry
-	------------------------------------------------------ */
-	var ssMasonryFolio = function() {
-
-		var containerBricks = $('.bricks-wrapper');
-
-		containerBricks.imagesLoaded( function() {
-			containerBricks.masonry( {	
-			  	itemSelector: '.brick',
-			  	resize: true
-			});
-		});
-	};
-
-
-	/*	Light Gallery
-	------------------------------------------------------- */
-	var ssLightGallery = function() {
-
-		$('#folio-wrap').lightGallery({  
-			showThumbByDefault: false,
-			hash: false,
-			selector: ".item-wrap"		
-		});
-	};
 
 
   	/* Menu on Scrolldown
@@ -86,40 +54,6 @@
 
 		}); 
 	};
-
-	
-  	/* OffCanvas Menu
-	 * ------------------------------------------------------ */
-   var ssOffCanvas = function() {
-
-	       var menuTrigger = $('#header-menu-trigger'),
-	       nav             = $('#menu-nav-wrap'),
-	       closeButton     = nav.find('.close-button'),
-	       siteBody        = $('body'),
-	       mainContents    = $('section, footer');
-
-		// open-close menu by clicking on the menu icon
-		menuTrigger.on('click', function(e){
-			e.preventDefault();
-			menuTrigger.toggleClass('is-clicked');
-			siteBody.toggleClass('menu-is-open');
-		});
-
-		// close menu by clicking the close button
-		closeButton.on('click', function(e){
-			e.preventDefault();
-			menuTrigger.trigger('click');	
-		});
-
-		// close menu clicking outside the menu itself
-		siteBody.on('click', function(e){		
-			if( !$(e.target).is('#menu-nav-wrap, #header-menu-trigger, #header-menu-trigger span') ) {
-				menuTrigger.removeClass('is-clicked');
-				siteBody.removeClass('menu-is-open');
-			}
-		});
-
-   };
 
 
   /* Smooth Scrolling
@@ -148,56 +82,7 @@
 
 	};
 
-
-  /* Placeholder Plugin Settings
-	* ------------------------------------------------------ */
-	var ssPlaceholder = function() {
-		$('input, textarea, select').placeholder();  
-	};
-
-
-  /* Stat Counter
-  	*------------------------------------------------------- */
-  	var ssStatCounter = function() {
-
-	   var statSection = $("#stats"),
-	   stats           = $(".stat-count");
-
-	   statSection.waypoint({
-	   	handler: function(direction) {
-
-	      	if (direction === "down") { 
-				   stats.each(function () {
-					   var $this = $(this);
-
-					   $({ Counter: 0 }).animate({ Counter: $this.text() }, {
-					   	duration: cfg.statsDuration,
-					   	easing: 'swing',
-					   	step: function (curValue) {
-					      	$this.text(Math.ceil(curValue));
-					    	}
-					  	});
-					});
-	       	} 
-
-	       	// trigger once only
-	       	this.destroy(); 
-			},	
-			offset: "90%"	
-		});
-
-  	};
-
-
-  	/* Alert Boxes
-  	------------------------------------------------------- */
-  	var ssAlertBoxes = function() {
-
-  		$('.alert-box').on('click', '.close', function() {
-		  $(this).parent().fadeOut(500);
-		}); 
-
-  	};	  	
+  	
 	
 
   /* Animations
@@ -267,52 +152,6 @@
 
 	};
 
-
-  /* Contact Form
-   * ------------------------------------------------------ */
-   var ssContactForm = function() {   	
-
-   	/* local validation */   	
-		$('#contactForm').validate({
-
-			/* submit via ajax */
-			submitHandler: function(form) {				
-				var sLoader = $('#submit-loader');			
-
-				$.ajax({   	
-			      type: "POST",
-			      url: "inc/sendEmail.php",
-			      data: $(form).serialize(),
-
-			      beforeSend: function() { 
-			      	sLoader.fadeIn(); 
-			      },
-			      success: function(msg) {
-		            // Message was sent
-		            if (msg == 'OK') {
-		            	sLoader.fadeOut(); 
-		               $('#message-warning').hide();
-		               $('#contactForm').fadeOut();
-		               $('#message-success').fadeIn();   
-		            }
-		            // There was an error
-		            else {
-		            	sLoader.fadeOut(); 
-		               $('#message-warning').html(msg);
-			            $('#message-warning').fadeIn();
-		            }
-			      },
-			      error: function() {
-			      	sLoader.fadeOut(); 
-			      	$('#message-warning').html("Something went wrong. Please try again.");
-			         $('#message-warning').fadeIn();
-			      }
-		      });    		
-	  		}
-
-		});
-   };	
-
  
   /* Back to Top
 	* ------------------------------------------------------ */
@@ -341,18 +180,9 @@
 	(function ssInit() {
 
 		ssPreloader();
-		ssFitVids();
-		ssMasonryFolio();
-		ssLightGallery();
-		ssMenuOnScrolldown();
-		ssOffCanvas();
 		ssSmoothScroll();
-		ssPlaceholder();
-		ssStatCounter();
-		ssAlertBoxes();
 		ssAnimations();
 		ssIntroAnimation();		
-		ssContactForm();
 		ssBackToTop();
 
 	})();
